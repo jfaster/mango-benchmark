@@ -47,4 +47,13 @@ public class Config {
         return CONFIG.getInt("taskNumPerThread");
     }
 
+    public static int getConnectTimeout() {
+        return CONFIG.getInt("jdbc.connectTimeout");
+    }
+
+    public static int getSocketTimeout() {
+        return CONFIG.getInt("jdbc.socketTimeout");
+    }
+
+
 }

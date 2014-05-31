@@ -14,8 +14,8 @@ public class DataSourceUtil {
         String host = Config.getJdbcHost();
         int port = Config.getJdbcPort();
         String database = Config.getJdbcDatabase();
-        int connectTimeout = 100;
-        int socketTimeout = 100;
+        int connectTimeout = Config.getConnectTimeout();
+        int socketTimeout = Config.getSocketTimeout();
         String username = Config.getJdbcUserName();
         String password = Config.getJdbcPassword();
 

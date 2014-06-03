@@ -21,7 +21,7 @@ public class BenchmarkRunner {
             mangoStats.add(mangoStat);
             System.out.println("round " + (i + 1) + " over!");
         }
-        System.out.println(jdbcStats);
-        System.out.println(mangoStats);
+        System.out.println("jdbcStats=" + jdbcStats);
+        System.out.println("mangoStats=" + mangoStats);
     }
 }

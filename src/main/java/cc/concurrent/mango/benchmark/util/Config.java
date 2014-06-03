@@ -55,5 +55,9 @@ public class Config {
         return CONFIG.getInt("jdbc.socketTimeout");
     }
 
+    public static int getRound() {
+        return CONFIG.getInt("round");
+    }
+
 
 }

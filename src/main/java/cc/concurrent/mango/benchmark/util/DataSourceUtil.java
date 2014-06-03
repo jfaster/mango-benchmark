@@ -9,7 +9,13 @@ import javax.sql.DataSource;
  */
 public class DataSourceUtil {
 
+    private static DataSource ds = doGetDataSource();
+
     public static DataSource getDataSource() {
+        return ds;
+    }
+
+    private static DataSource doGetDataSource() {
         BasicDataSource ds = new BasicDataSource();
         String host = Config.getJdbcHost();
         int port = Config.getJdbcPort();
@@ -34,7 +40,6 @@ public class DataSourceUtil {
         ds.setNumTestsPerEvictionRun(50);
         ds.setTimeBetweenEvictionRunsMillis(1000);
         ds.setValidationQuery("SELECT 1");
-
         return ds;
     }
 

@@ -18,7 +18,7 @@ public abstract class BenchmarkTemplate {
     private final AtomicInteger exceptionNum = new AtomicInteger();
     private final AtomicLong totalCost = new AtomicLong();
 
-    public void run() throws Exception {
+    public Stat run() throws Exception {
         int threadNum = Config.getThreadNum();
         final int taskNumPerThread = Config.getTaskNumPerThread();
 
@@ -38,13 +38,7 @@ public abstract class BenchmarkTemplate {
         }
 
         latch.await();
-
-        System.out.println("successNum=" + successNum.intValue());
-        System.out.println("exceptionNum=" + exceptionNum.intValue());
-        System.out.println("totalCost=" + totalCost.longValue());
-        System.out.println("avg=" +
-                TimeUnit.NANOSECONDS.toMillis(totalCost.longValue() / (successNum.intValue() + exceptionNum.intValue()))
-                + "ms");
+        return new Stat(successNum.intValue(), exceptionNum.intValue(), totalCost.longValue());
     }
 
     abstract void doRun(int taskNumPerThread, AtomicInteger successNum, AtomicInteger exceptionNum, AtomicLong totalCost);

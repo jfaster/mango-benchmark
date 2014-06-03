@@ -1,6 +1,6 @@
 package cc.concurrent.mango.benchmark;
 
-import cc.concurrent.mango.benchmark.dao.JdbcUserDao;
+import cc.concurrent.mango.Mango;
 import cc.concurrent.mango.benchmark.dao.UserDao;
 import cc.concurrent.mango.benchmark.util.DataSourceUtil;
 
@@ -11,11 +11,12 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * @author ash
  */
-public class JdbcInsertTest extends BenchmarkTemplate {
+public class MangoInsert extends BenchmarkTemplate {
 
     @Override
     void doRun(int taskNumPerThread, AtomicInteger successNum, AtomicInteger exceptionNum, AtomicLong totalCost) {
-        UserDao userDao = new JdbcUserDao(DataSourceUtil.getDataSource());
+        Mango mango = new Mango(DataSourceUtil.getDataSource());
+        UserDao userDao = mango.create(UserDao.class);
         for (int i = 0; i < taskNumPerThread; i++) {
             long t = System.nanoTime();
             boolean ok = false;
@@ -35,8 +36,5 @@ public class JdbcInsertTest extends BenchmarkTemplate {
         }
     }
 
-    public static void main(String[] args) throws Exception {
-        new JdbcInsertTest().run();
-    }
-
 }
+

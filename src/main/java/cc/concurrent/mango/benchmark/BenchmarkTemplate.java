@@ -1,11 +1,11 @@
 package cc.concurrent.mango.benchmark;
 
+import cc.concurrent.mango.benchmark.model.Stat;
 import cc.concurrent.mango.benchmark.util.Config;
 
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 

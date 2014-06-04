@@ -1,4 +1,4 @@
-package cc.concurrent.mango.benchmark;
+package cc.concurrent.mango.benchmark.model;
 
 
 /**

@@ -2,7 +2,7 @@ package cc.concurrent.mango.benchmark;
 
 import cc.concurrent.mango.Mango;
 import cc.concurrent.mango.benchmark.dao.MangoUserDao;
-import cc.concurrent.mango.benchmark.dao.UserDao;
+import cc.concurrent.mango.benchmark.model.User;
 import cc.concurrent.mango.benchmark.util.DataSourceUtil;
 
 import java.util.Date;
@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * @author ash
  */
-public class MangoInsert extends BenchmarkTemplate {
+public class MangoInsertRound extends BenchmarkTemplate {
 
     @Override
     void doRun(int taskNumPerThread, AtomicInteger successNum, AtomicInteger exceptionNum, AtomicLong totalCost) {

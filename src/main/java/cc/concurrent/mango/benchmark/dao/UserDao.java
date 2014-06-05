@@ -3,6 +3,7 @@ package cc.concurrent.mango.benchmark.dao;
 import cc.concurrent.mango.benchmark.model.User;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author ash
@@ -14,5 +15,7 @@ public interface UserDao {
     public User getUserById(int id) throws Exception;
 
     public int getMaxId();
+
+    public int[] batchInsert(List<User> users) throws Exception;
 
 }

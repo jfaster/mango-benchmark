@@ -6,6 +6,7 @@ import cc.concurrent.mango.jdbc.JdbcUtils;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author ash
@@ -75,6 +76,26 @@ public class JdbcUserDao implements UserDao {
             throw new RuntimeException(e.getMessage(), e);
         } finally {
             JdbcUtils.closeResultSet(rs);
+            JdbcUtils.closeStatement(ps);
+            JdbcUtils.closeConnection(conn);
+        }
+    }
+
+    @Override
+    public int[] batchInsert(List<User> users) throws Exception {
+        Connection conn = JdbcUtils.getConnection(dataSource);
+        PreparedStatement ps = null;
+        try {
+            ps = conn.prepareStatement("insert into user_j(uid, name, money, create_time) values(?, ?, ?, ?)");
+            for (User user : users) {
+                ps.setInt(1, user.getUid());
+                ps.setString(2, user.getName());
+                ps.setLong(3, user.getMoney());
+                ps.setTimestamp(4, new Timestamp(user.getCreateTime().getTime()));
+                ps.addBatch();
+            }
+            return ps.executeBatch();
+        } finally {
             JdbcUtils.closeStatement(ps);
             JdbcUtils.closeConnection(conn);
         }

@@ -59,5 +59,9 @@ public class Config {
         return CONFIG.getInt("round");
     }
 
+    public static int getBatchNum() {
+        return CONFIG.getInt("batchNum");
+    }
+
 
 }

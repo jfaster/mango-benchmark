@@ -4,6 +4,8 @@ import cc.concurrent.mango.DB;
 import cc.concurrent.mango.SQL;
 import cc.concurrent.mango.benchmark.model.User;
 
+import java.util.List;
+
 /**
  * @author ash
  */
@@ -18,5 +20,8 @@ public interface MangoUserDao {
 
     @SQL("select max(id) from user_m")
     public int getMaxId();
+
+    @SQL("insert into user_m(uid, name, money, create_time) values(:1.uid, :1.name, :1.money, :1.createTime)")
+    public int[] batchInsert(List<User> user);
 
 }

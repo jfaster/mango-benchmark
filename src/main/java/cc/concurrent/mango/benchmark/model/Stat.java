@@ -28,7 +28,7 @@ public class Stat {
         return totalCost;
     }
 
-    public double getAvg() {
+    public long getAvg() {
         return totalCost / (successNum + exceptionNum);
     }
 

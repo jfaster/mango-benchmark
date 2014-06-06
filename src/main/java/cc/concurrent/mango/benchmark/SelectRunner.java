@@ -1,9 +1,11 @@
 package cc.concurrent.mango.benchmark;
 
+import cc.concurrent.mango.MethodStats;
 import cc.concurrent.mango.benchmark.model.Stat;
 import cc.concurrent.mango.benchmark.round.JdbcSelectRound;
 import cc.concurrent.mango.benchmark.round.MangoSelectRound;
 import cc.concurrent.mango.benchmark.util.Config;
+import cc.concurrent.mango.benchmark.util.MangoUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,5 +29,7 @@ public class SelectRunner {
         System.out.println("SelectRunner");
         System.out.println("jdbcStats=" + jdbcStats);
         System.out.println("mangoStats=" + mangoStats);
+        MethodStats stat = new ArrayList<MethodStats>(MangoUtil.getMango().getStatsMap().values()).get(0);
+        System.out.println("mangoInnerAvg=" + stat.averageExecutePenalty());
     }
 }

@@ -2,7 +2,7 @@ package cc.concurrent.mango.benchmark.round;
 
 import cc.concurrent.mango.Mango;
 import cc.concurrent.mango.benchmark.dao.MangoUserDao;
-import cc.concurrent.mango.benchmark.util.DataSourceUtil;
+import cc.concurrent.mango.benchmark.util.MangoUtil;
 import org.apache.commons.lang.math.RandomUtils;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -15,7 +15,7 @@ public class MangoSelectRound extends BenchmarkTemplate {
 
     @Override
     void doRun(int taskNumPerThread, AtomicInteger successNum, AtomicInteger exceptionNum, AtomicLong totalCost) {
-        Mango mango = new Mango(DataSourceUtil.getDataSource());
+        Mango mango = MangoUtil.getMango();
         MangoUserDao userDao = mango.create(MangoUserDao.class);
         int maxId = userDao.getMaxId();
         System.out.println("mangoMaxId=" + maxId);

@@ -4,7 +4,6 @@ import cc.concurrent.mango.Mango;
 import cc.concurrent.mango.benchmark.dao.JdbcUserDao;
 import cc.concurrent.mango.benchmark.dao.MangoUserDao;
 import cc.concurrent.mango.benchmark.util.DataSourceUtil;
-import cc.concurrent.mango.benchmark.util.MangoUtil;
 import org.apache.commons.lang.math.RandomUtils;
 
 import java.util.concurrent.atomic.AtomicInteger;

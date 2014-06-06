@@ -1,6 +1,8 @@
 package cc.concurrent.mango.benchmark;
 
 import cc.concurrent.mango.benchmark.model.Stat;
+import cc.concurrent.mango.benchmark.round.JdbcInsertRound;
+import cc.concurrent.mango.benchmark.round.MangoInsertRound;
 import cc.concurrent.mango.benchmark.util.Config;
 
 import java.util.ArrayList;

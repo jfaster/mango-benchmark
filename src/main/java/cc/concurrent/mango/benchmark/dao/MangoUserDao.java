@@ -24,4 +24,7 @@ public interface MangoUserDao {
     @SQL("insert into user_m(uid, name, money, create_time) values(:1.uid, :1.name, :1.money, :1.createTime)")
     public int[] batchInsert(List<User> user);
 
+    @SQL("select uid, name, money, create_time from user_m where id in (:1)")
+    public List<User> getUsersByIds(List<Integer> ids);
+
 }

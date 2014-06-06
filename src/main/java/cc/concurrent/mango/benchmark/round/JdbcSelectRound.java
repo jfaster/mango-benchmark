@@ -1,4 +1,4 @@
-package cc.concurrent.mango.benchmark;
+package cc.concurrent.mango.benchmark.round;
 
 import cc.concurrent.mango.benchmark.dao.JdbcUserDao;
 import cc.concurrent.mango.benchmark.dao.UserDao;

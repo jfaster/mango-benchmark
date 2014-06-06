@@ -18,4 +18,6 @@ public interface UserDao {
 
     public int[] batchInsert(List<User> users) throws Exception;
 
+    public List<User> getUsersByIds(List<Integer> ids) throws Exception;
+
 }

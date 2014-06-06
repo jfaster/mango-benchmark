@@ -5,6 +5,7 @@ import cc.concurrent.mango.jdbc.JdbcUtils;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -100,4 +101,41 @@ public class JdbcUserDao implements UserDao {
             JdbcUtils.closeConnection(conn);
         }
     }
+
+    @Override
+    public List<User> getUsersByIds(List<Integer> ids) throws Exception {
+        Connection conn = JdbcUtils.getConnection(dataSource);
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            ps = conn.prepareStatement("select uid, name, money, create_time from user_j " +
+                    "where id in (" + join(ids) + ")");
+            rs = ps.executeQuery();
+            List<User> users = new ArrayList<User>();
+            if (rs.next()) {
+                int uid = rs.getInt("uid");
+                String name = rs.getString("name");
+                long money = rs.getLong("money");
+                Date createTime = rs.getDate("create_time");
+                users.add(new User(uid, name, money, createTime));
+            }
+            return users;
+        } finally {
+            JdbcUtils.closeResultSet(rs);
+            JdbcUtils.closeStatement(ps);
+            JdbcUtils.closeConnection(conn);
+        }
+    }
+
+    private String join(List<Integer> ids) {
+        StringBuffer sb = new StringBuffer();
+        if (ids.size() > 0) {
+            sb.append(ids.get(0));
+            for (int i = 1; i < ids.size(); i++) {
+                sb.append(",").append(ids.get(i));
+            }
+        }
+        return sb.toString();
+    }
+
 }

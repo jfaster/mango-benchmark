@@ -1,4 +1,4 @@
-package cc.concurrent.mango.benchmark;
+package cc.concurrent.mango.benchmark.round;
 
 import cc.concurrent.mango.benchmark.model.Stat;
 import cc.concurrent.mango.benchmark.util.Config;

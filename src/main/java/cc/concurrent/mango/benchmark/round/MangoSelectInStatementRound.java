@@ -1,29 +1,33 @@
-package cc.concurrent.mango.benchmark;
+package cc.concurrent.mango.benchmark.round;
 
 import cc.concurrent.mango.Mango;
 import cc.concurrent.mango.benchmark.dao.MangoUserDao;
-import cc.concurrent.mango.benchmark.model.User;
+import cc.concurrent.mango.benchmark.util.Config;
 import cc.concurrent.mango.benchmark.util.DataSourceUtil;
+import org.apache.commons.lang.math.RandomUtils;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author ash
  */
-public class MangoInsertRound extends BenchmarkTemplate {
+public class MangoSelectInStatementRound extends BenchmarkTemplate {
 
     @Override
     void doRun(int taskNumPerThread, AtomicInteger successNum, AtomicInteger exceptionNum, AtomicLong totalCost) {
         Mango mango = new Mango(DataSourceUtil.getDataSource());
         MangoUserDao userDao = mango.create(MangoUserDao.class);
+        int maxId = userDao.getMaxId();
+        System.out.println("mangoMaxId=" + maxId);
         for (int i = 0; i < taskNumPerThread; i++) {
-            User user = new User(100, "test", 1000, new Date());
+            List<Integer> ids = getIds(maxId, Config.getBatchNum());
             long t = System.nanoTime();
             boolean ok = false;
             try {
-                userDao.insert(user);
+                userDao.getUsersByIds(ids);
                 ok = true;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -36,6 +40,14 @@ public class MangoInsertRound extends BenchmarkTemplate {
                 }
             }
         }
+    }
+
+    private List<Integer> getIds(int maxId, int num) {
+        List<Integer> ids = new ArrayList<Integer>();
+        for (int i = 0; i < num; i++) {
+            ids.add(RandomUtils.nextInt(maxId));
+        }
+        return ids;
     }
 
 }

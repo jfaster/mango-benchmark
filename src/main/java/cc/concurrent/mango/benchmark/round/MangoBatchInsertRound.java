@@ -4,7 +4,6 @@ import cc.concurrent.mango.Mango;
 import cc.concurrent.mango.benchmark.dao.MangoUserDao;
 import cc.concurrent.mango.benchmark.model.User;
 import cc.concurrent.mango.benchmark.util.Config;
-import cc.concurrent.mango.benchmark.util.MangoUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,9 +16,14 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class MangoBatchInsertRound extends BenchmarkTemplate {
 
+    private Mango mango;
+
+    public MangoBatchInsertRound(Mango mango) {
+        this.mango = mango;
+    }
+
     @Override
     void doRun(int taskNumPerThread, AtomicInteger successNum, AtomicInteger exceptionNum, AtomicLong totalCost) {
-        Mango mango = MangoUtil.getMango();
         MangoUserDao userDao = mango.create(MangoUserDao.class);
         for (int i = 0; i < taskNumPerThread; i++) {
             List<User> users = getUsers(Config.getBatchNum());

@@ -23,10 +23,11 @@ public class JdbcUpdateInStatementRound extends BenchmarkTemplate {
         System.out.println("mangoMaxId=" + maxId);
         for (int i = 0; i < taskNumPerThread; i++) {
             List<Integer> ids = getIds(maxId, Config.getBatchNum());
+            long money = RandomUtils.nextLong();
             long t = System.nanoTime();
             boolean ok = false;
             try {
-                userDao.updateUserNamesByIds(ids, 10086);
+                userDao.updateUserNamesByIds(ids, money);
                 ok = true;
             } catch (Exception e) {
                 e.printStackTrace();

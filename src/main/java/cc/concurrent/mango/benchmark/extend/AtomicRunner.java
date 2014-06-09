@@ -1,4 +1,4 @@
-package cc.concurrent.mango.benchmark;
+package cc.concurrent.mango.benchmark.extend;
 
 import cc.concurrent.mango.benchmark.util.Config;
 import cc.concurrent.mango.util.concurrent.atomic.LongAddable;
@@ -7,14 +7,15 @@ import cc.concurrent.mango.util.concurrent.atomic.LongAdder;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author ash
  */
-public class LongAddableRunner {
+public class AtomicRunner {
 
-    private static LongAddable addableNum = new LongAdder();
-    private static LongAddable addableCost = new LongAdder();
+    private static AtomicLong addableNum = new AtomicLong();
+    private static AtomicLong addableCost = new AtomicLong();
     private static int threadNum = Config.getThreadNum();
     private static int taskNumPerThread = Config.getTaskNumPerThread();
 
@@ -43,8 +44,8 @@ public class LongAddableRunner {
 
     private static void doRun() {
         for (int i = 0; i < taskNumPerThread; i++) {
-            addableNum.increment();
-            addableCost.add(10);
+            addableNum.incrementAndGet();
+            addableCost.addAndGet(10);
         }
     }
 

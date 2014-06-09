@@ -103,6 +103,20 @@ public class JdbcUserDao implements UserDao {
     }
 
     @Override
+    public int updateUserNamesByIds(List<Integer> ids, long money) throws Exception {
+        Connection conn = JdbcUtils.getConnection(dataSource);
+        PreparedStatement ps = null;
+        try {
+            ps = conn.prepareStatement("update user_j set money=? where id in (" + join(ids) + ")");
+            ps.setLong(1, money);
+            return ps.executeUpdate();
+        } finally {
+            JdbcUtils.closeStatement(ps);
+            JdbcUtils.closeConnection(conn);
+        }
+    }
+
+    @Override
     public List<User> getUsersByIds(List<Integer> ids) throws Exception {
         Connection conn = JdbcUtils.getConnection(dataSource);
         PreparedStatement ps = null;

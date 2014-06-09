@@ -18,6 +18,8 @@ public interface UserDao {
 
     public int[] batchInsert(List<User> users) throws Exception;
 
+    public int updateUserNamesByIds(List<Integer> ids, long money) throws Exception;
+
     public List<User> getUsersByIds(List<Integer> ids) throws Exception;
 
 }

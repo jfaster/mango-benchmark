@@ -19,7 +19,7 @@ public class BatchInsertRunner {
     public static void main(String[] args) throws Exception {
         List<Stat> jdbcStats = new ArrayList<Stat>();
         List<Stat> mangoStats = new ArrayList<Stat>();
-        List<Double> avgs = new ArrayList<Double>();
+        List<Long> avgs = new ArrayList<Long>();
 
         int round = Config.getRound();
         for (int i = 0; i < round; i++) {

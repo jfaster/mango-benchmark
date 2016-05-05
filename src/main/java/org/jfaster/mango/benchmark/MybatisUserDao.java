@@ -28,7 +28,15 @@ public class MybatisUserDao implements UserDao {
 
     @Override
     public void addUser(int id, String name, int age) throws Exception {
-        //To change body of implemented methods use File | Settings | File Templates.
+        SqlSession session = sqlSessionFactory.openSession();
+        try {
+            UserMapper mapper = session.getMapper(UserMapper.class);
+            mapper.addUser(id, name, age);
+            session.commit();
+            return;
+        } finally {
+            session.close();
+        }
     }
 
     @Override

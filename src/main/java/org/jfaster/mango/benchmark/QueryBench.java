@@ -7,8 +7,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author ash
  */
-@Warmup(iterations = 10)
-@Measurement(iterations = 10)
+@Warmup(iterations = 15)
+@Measurement(iterations = 15)
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 public class QueryBench extends BenchBase {

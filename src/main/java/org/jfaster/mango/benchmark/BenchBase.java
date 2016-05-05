@@ -30,7 +30,7 @@ import java.sql.Statement;
 @State(Scope.Benchmark)
 public class BenchBase {
 
-    @Param({"mango", "jdbc", "spring-jdbc", "mybatis"})
+    @Param({"spring-jdbc", "mybatis", "mango", "jdbc"})
     public String framework;
 
     public static HikariDataSource DS;
@@ -187,6 +187,11 @@ public class BenchBase {
                 e.printStackTrace();
             }
         }
+        try {
+            DAO.addUser(1, "ash", 25);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     protected void setupSpringJdbc() {
@@ -251,7 +256,7 @@ public class BenchBase {
         config.setConnectionTimeout(8000);
         config.setAutoCommit(true);
         DS = new HikariDataSource(config);
-        DAO = new SpringJdbcUserDao(DS);
+        DAO = new MybatisUserDao(DS);
 
         Connection conn = null;
         Statement stat = null;
@@ -274,7 +279,7 @@ public class BenchBase {
             }
         }
         DAO.addUser(1, "ash", 25);
-        System.out.println(DAO.getUserById(1).getName());
+        System.out.println(DAO.getUserById(1));
     }
 
 }

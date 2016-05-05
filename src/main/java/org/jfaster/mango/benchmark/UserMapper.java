@@ -3,6 +3,8 @@ package org.jfaster.mango.benchmark;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+import org.jfaster.mango.annotation.SQL;
 
 /**
  * @author ash
@@ -14,5 +16,8 @@ public interface UserMapper {
 
     @Select("select id, name, age from user where id = #{id}")
     public User getUserById(int id) throws Exception;
+
+    @Update("update user set age = #{age} where id = #{id}")
+    public void updateUser(@Param("id") int id, @Param("age") int age) throws Exception;
 
 }

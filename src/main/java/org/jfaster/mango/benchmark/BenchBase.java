@@ -28,7 +28,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 @State(Scope.Benchmark)
-public class BenchBase {
+public abstract class BenchBase {
 
     @Param({"spring-jdbc", "mybatis", "mango", "jdbc"})
     public String framework;
@@ -72,129 +72,31 @@ public class BenchBase {
         }
     }
 
-    protected void setupMango() {
-        HikariConfig config = new HikariConfig();
-        config.setDriverClassName("org.hsqldb.jdbcDriver");
-        config.setJdbcUrl("jdbc:hsqldb:mem:test");
-        config.setUsername("sa");
-        config.setPassword("");
-        config.setMinimumIdle(16);
-        config.setMaximumPoolSize(32);
-        config.setConnectionTimeout(8000);
-        config.setAutoCommit(true);
-        DS = new HikariDataSource(config);
+    private void setupMango() {
+        DS = createDataSource();
         DAO = Mango.newInstance(DS).create(MangoUserDao.class);
-
-        Connection conn = null;
-        Statement stat = null;
-        try {
-            conn = DS.getConnection();
-            stat = conn.createStatement();
-            stat.execute(Joiner.on("\n").join(tables));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (stat != null) {
-                    stat.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        try {
-            DAO.addUser(1, "ash", 25);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        init();
     }
 
-    protected void setupJdbc() {
-        HikariConfig config = new HikariConfig();
-        config.setDriverClassName("org.hsqldb.jdbcDriver");
-        config.setJdbcUrl("jdbc:hsqldb:mem:test");
-        config.setUsername("sa");
-        config.setPassword("");
-        config.setMinimumIdle(16);
-        config.setMaximumPoolSize(32);
-        config.setConnectionTimeout(8000);
-        config.setAutoCommit(true);
-        DS = new HikariDataSource(config);
+    private void setupJdbc() {
+        DS = createDataSource();
         DAO = new JdbcUserDao(DS);
-
-        Connection conn = null;
-        Statement stat = null;
-        try {
-            conn = DS.getConnection();
-            stat = conn.createStatement();
-            stat.execute(Joiner.on("\n").join(tables));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (stat != null) {
-                    stat.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        try {
-            DAO.addUser(1, "ash", 25);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        init();
     }
 
-    protected void setupMybatis() {
-        HikariConfig config = new HikariConfig();
-        config.setDriverClassName("org.hsqldb.jdbcDriver");
-        config.setJdbcUrl("jdbc:hsqldb:mem:test");
-        config.setUsername("sa");
-        config.setPassword("");
-        config.setMinimumIdle(16);
-        config.setMaximumPoolSize(32);
-        config.setConnectionTimeout(8000);
-        config.setAutoCommit(true);
-        DS = new HikariDataSource(config);
+    private void setupMybatis() {
+        DS = createDataSource();
         DAO = new MybatisUserDao(DS);
-
-        Connection conn = null;
-        Statement stat = null;
-        try {
-            conn = DS.getConnection();
-            stat = conn.createStatement();
-            stat.execute(Joiner.on("\n").join(tables));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (stat != null) {
-                    stat.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        try {
-            DAO.addUser(1, "ash", 25);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        init();
     }
 
-    protected void setupSpringJdbc() {
+    private void setupSpringJdbc() {
+        DS = createDataSource();
+        DAO = new SpringJdbcUserDao(DS);
+        init();
+    }
+
+    private HikariDataSource createDataSource() {
         HikariConfig config = new HikariConfig();
         config.setDriverClassName("org.hsqldb.jdbcDriver");
         config.setJdbcUrl("jdbc:hsqldb:mem:test");
@@ -204,16 +106,18 @@ public class BenchBase {
         config.setMaximumPoolSize(32);
         config.setConnectionTimeout(8000);
         config.setAutoCommit(true);
-        DS = new HikariDataSource(config);
-        DAO = new SpringJdbcUserDao(DS);
+        return new HikariDataSource(config);
+    }
 
+    private void init() {
         Connection conn = null;
         Statement stat = null;
         try {
             conn = DS.getConnection();
             stat = conn.createStatement();
             stat.execute(Joiner.on("\n").join(tables));
-        } catch (SQLException e) {
+            initData();
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
@@ -227,14 +131,9 @@ public class BenchBase {
                 e.printStackTrace();
             }
         }
-        try {
-            DAO.addUser(1, "ash", 25);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
-    static String[] tables = new String[] {
+    private static String[] tables = new String[] {
             "DROP TABLE IF EXISTS user;",
             "CREATE TABLE user",
             "(",
@@ -244,6 +143,8 @@ public class BenchBase {
             "    PRIMARY KEY (id)",
             ");"
     };
+
+    abstract void initData() throws Exception;
 
     public static void main(String[] args) throws Exception {
         HikariConfig config = new HikariConfig();

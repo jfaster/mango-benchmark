@@ -19,19 +19,10 @@ public interface MangoUserDao extends UserDao {
 
     @Override
     @SQL("select id, name, age from user where id = :1")
-    //@Mapper(A.class)
     public User getUserById(int id) throws Exception;
 
-    static class A extends AbstractRowMapper<User> {
-
-        @Override
-        public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-            User user = new User();
-            user.setId(rs.getInt("id"));
-            user.setName(rs.getString("name"));
-            user.setAge(rs.getInt("age"));
-            return user;
-        }
-    }
+    @Override
+    @SQL("update user set age = :2 where id = :1")
+    public void updateUser(int id, int age) throws Exception;
 
 }

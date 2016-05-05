@@ -69,4 +69,25 @@ public class JdbcUserDao implements UserDao {
         }
     }
 
+    @Override
+    public void updateUser(int id, int age) throws Exception {
+        Connection conn = null;
+        PreparedStatement pstat = null;
+        try {
+            conn = ds.getConnection();
+            pstat = conn.prepareStatement("update user set age = ? where id = ?");
+            pstat.setInt(1, age);
+            pstat.setInt(2, id);
+            pstat.executeUpdate();
+            return;
+        } finally {
+            if (pstat != null) {
+                pstat.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+    }
+
 }

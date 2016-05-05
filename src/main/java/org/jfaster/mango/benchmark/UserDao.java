@@ -9,4 +9,6 @@ public interface UserDao {
 
     public User getUserById(int id) throws Exception;
 
+    public void updateUser(int id, int age) throws Exception;
+
 }

@@ -51,4 +51,17 @@ public class MybatisUserDao implements UserDao {
         }
     }
 
+    @Override
+    public void updateUser(int id, int age) throws Exception {
+        SqlSession session = sqlSessionFactory.openSession();
+        try {
+            UserMapper mapper = session.getMapper(UserMapper.class);
+            mapper.updateUser(id, age);
+            session.commit();
+            return;
+        } finally {
+            session.close();
+        }
+    }
+
 }

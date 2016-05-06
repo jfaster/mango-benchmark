@@ -1,6 +1,3 @@
-mango-benchmark
-===============
-
 ![](https://raw.githubusercontent.com/jfaster/mango-benchmark/master/benchmark.png)
 
  * Jdbc means using only native jdbc API, do not use any ORM frameworks.
@@ -20,5 +17,5 @@ How to run?
  * ``mvn clean package``
  * ``sh benchmark.sh``
 
- The ``benchmark.sh`` script is a wrapper around JMH execution.
- A full run of the benchmark will take about 10 minutes for all frameworks.
+The ``benchmark.sh`` script is a wrapper around JMH execution.
+A full run of the benchmark will take about 10 minutes for all frameworks.

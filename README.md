@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/jfaster/mango-benchmark.svg?branch=master)](https://travis-ci.org/jfaster/mango-benchmark)
+
 ![](https://raw.githubusercontent.com/jfaster/mango-benchmark/master/benchmark.png)
 
  * Jdbc means using only native jdbc API, do not use any ORM frameworks.

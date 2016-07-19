@@ -21,5 +21,5 @@ Requires JDK 1.7 or higher.
  * ``mvn clean package``
  * ``sh benchmark.sh`` for Linux or ``benchmark.cmd`` for Windows
 
-The ``benchmark.sh`` script is a wrapper around JMH execution.
+The ``benchmark.sh`` and ``benchmark.cmd`` script is a wrapper around JMH execution.
 A full run of the benchmark will take about 10 minutes for all frameworks.

@@ -19,7 +19,7 @@ Requires JDK 1.7 or higher.
  * ``git clone https://github.com/jfaster/mango-benchmark.git``
  * ``cd mango-benchmark``
  * ``mvn clean package``
- * ``sh benchmark.sh``
+ * ``sh benchmark.sh or benchmark.cmd(windows)``
 
 The ``benchmark.sh`` script is a wrapper around JMH execution.
 A full run of the benchmark will take about 10 minutes for all frameworks.

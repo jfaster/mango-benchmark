@@ -55,17 +55,11 @@ public abstract class BenchBase {
     }
 
     @TearDown(Level.Trial)
-    public void teardown() throws SQLException {
+    public void teardown() {
         switch (framework) {
             case "mango":
-                DS.close();
-                break;
-            case "jdbc":
-                DS.close();
-                break;
             case "mybatis":
-                DS.close();
-                break;
+            case "jdbc":
             case "spring-jdbc":
                 DS.close();
                 break;
@@ -98,7 +92,7 @@ public abstract class BenchBase {
 
     private HikariDataSource createDataSource() {
         HikariConfig config = new HikariConfig();
-        config.setDriverClassName("org.hsqldb.jdbcDriver");
+        config.setDriverClassName("org.hsqldb.jdbc.JDBCDriver");
         config.setJdbcUrl("jdbc:hsqldb:mem:test");
         config.setUsername("sa");
         config.setPassword("");
@@ -148,7 +142,7 @@ public abstract class BenchBase {
 
     public static void main(String[] args) throws Exception {
         HikariConfig config = new HikariConfig();
-        config.setDriverClassName("org.hsqldb.jdbcDriver");
+        config.setDriverClassName("org.hsqldb.jdbc.JDBCDriver");
         config.setJdbcUrl("jdbc:hsqldb:mem:test");
         config.setUsername("sa");
         config.setPassword("");
@@ -158,7 +152,6 @@ public abstract class BenchBase {
         config.setAutoCommit(true);
         DS = new HikariDataSource(config);
         DAO = new MybatisUserDao(DS);
-
         Connection conn = null;
         Statement stat = null;
         try {

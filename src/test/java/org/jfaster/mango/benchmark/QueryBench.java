@@ -1,12 +1,18 @@
 package org.jfaster.mango.benchmark;
 
-import org.openjdk.jmh.annotations.*;
-
 import java.util.concurrent.TimeUnit;
 
+import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.BenchmarkMode;
+import org.openjdk.jmh.annotations.CompilerControl;
+import org.openjdk.jmh.annotations.Measurement;
+import org.openjdk.jmh.annotations.Mode;
+import org.openjdk.jmh.annotations.OutputTimeUnit;
+import org.openjdk.jmh.annotations.Warmup;
+
 /**
-* @author ash
-*/
+ * @author ash
+ */
 @Warmup(iterations = 20)
 @Measurement(iterations = 10)
 @BenchmarkMode(Mode.Throughput)
@@ -24,7 +30,7 @@ public class QueryBench extends BenchBase {
     }
 
     @Override
-    void initData() throws Exception{
+    void initData() throws Exception {
         DAO.addUser(1, "ash", 25);
     }
 

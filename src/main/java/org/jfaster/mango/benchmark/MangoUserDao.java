@@ -2,10 +2,6 @@ package org.jfaster.mango.benchmark;
 
 import org.jfaster.mango.annotation.DB;
 import org.jfaster.mango.annotation.SQL;
-import org.jfaster.mango.jdbc.AbstractRowMapper;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 /**
  * @author ash
